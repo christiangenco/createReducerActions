@@ -2,5 +2,11 @@
   "name": "createReducer",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "jest": "^22.4.2"
+  }
 }
