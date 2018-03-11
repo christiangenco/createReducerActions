@@ -4,9 +4,11 @@
 
 [![NPM](https://nodei.co/npm/create-reducer-actions.png?downloads=true)](https://nodei.co/npm/create-reducer-actions/)
 
-[`createReducerActions`]() is a single function that creates a redux reducer and linked action creators.
+[`createReducerActions`](https://github.com/christiangenco/createReducerActions) is a single function that creates a [redux reducer](https://redux.js.org/basics/reducers) and linked [action creators](https://redux.js.org/basics/actions#action-creators).
 
-It works like this:
+You don't need to define action types or actions, and you don't need to write tedious switch/case statements in your reducers.
+
+`createReducerActions` works like this:
 
 ```js
 const initialState = 0;
@@ -29,15 +31,11 @@ reducer(7, up()); // 8
 
 ```bash
 $ npm install --save create-reducer-actions
-```
-
-or
-
-```bash
+// or
 $ yarn add create-reducer-actions
 ```
 
-## Usage
+## Usage with React
 
 ```jsx
 // redux/counter.js
@@ -99,6 +97,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 
 ## `actionPrefix`
 
+In a large application action names can conflict with each other. Prefix actions with `{appName}/{reducerName}/` to avoid conflicts:
+
 ```javascript
 const { reducer, actions } = createReducerActions(
   {
@@ -114,6 +114,10 @@ const { reducer, actions } = createReducerActions(
 
 ## `mutable`
 
+[Redux requires immutable changes to state](https://redux.js.org/faq/immutable-data#why-is-immutability-required).
+
+Immutable changes in deeply nested objects are difficult to do, so add `mutable: true` to the `createReducerActions` options and you can make mutable changes to state that will be automatically turned into immutable changes:
+
 ```js
 const initialState = {
   photos: { large: { url: "" } }
@@ -123,6 +127,7 @@ const { reducer, actions } = createReducerActions(
     setLargePhotoUrl: (state, { payload: { url } }) => {
       // mutate the state!
       state.photos.large.url = url;
+      // don't return anything
     }
   },
   initialState,
@@ -135,6 +140,8 @@ newState.photos.large.url; // "https://i.imgur.com/4LR3f32.jpg"
 initialState.photos.large.url; // "" The initial state wasn't mutated =O
 ```
 
+These mutating changes are done with the immutable helper library [immer](https://github.com/mweststrate/immer).
+
 # Similar Projects
 
 * https://github.com/kolodny/redux-create-reducer
@@ -144,7 +151,3 @@ initialState.photos.large.url; // "" The initial state wasn't mutated =O
 * https://javascript.tutorialhorizon.com/2016/07/23/create-reducer-for-redux-applications/
 * https://github.com/redux-utilities/redux-actions
 * https://github.com/anish000kumar/redux-box
-
-# Motivation
-
-The standard way of using Redux has too much boiler plate code that makes Redux hard to use.
