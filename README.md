@@ -6,7 +6,14 @@
 
 [`createReducerActions`](https://github.com/christiangenco/createReducerActions) is a single function that creates a [redux reducer](https://redux.js.org/basics/reducers) and linked [action creators](https://redux.js.org/basics/actions#action-creators).
 
-You don't need to define action types or actions, and you don't need to write tedious switch/case statements in your reducers.
+Benefits:
+
+* You don't need to define action type constants
+* You don't need to write actions or action creators
+* You don't need to write tedious switch/case statements in your reducers
+* Everything you need to implement a redux feature fits cleanly in one file
+* All actions can be automatically connected to a React component's `props` instead of explicitly connecting them one-by-one in `mapDispatchToProps`
+* `createReducerActions` generates reducers and action creators that work just like ones you would write by hand, so you can easily _try it in existing redux projects_ without refactoring every reducer
 
 `createReducerActions` works like this:
 
@@ -106,11 +113,11 @@ const { reducer, actions } = createReducerActions(
 );
 ```
 
-`actions.like()` will now dispatch an action with type `FACEBOOK/LIKE_REDUCER/like`.
+`actions.like()` will now generate an action with type `FACEBOOK/LIKE_REDUCER/like`.
 
 ## `mutable`
 
-[Redux requires immutable changes to state](https://redux.js.org/faq/immutable-data#why-is-immutability-required).
+Redux [requires immutable changes](https://redux.js.org/faq/immutable-data#why-is-immutability-required) to state.
 
 Immutable changes in deeply nested objects are difficult to do, so add `mutable: true` to the `createReducerActions` options and you can make mutable changes to state that will be automatically turned into immutable changes:
 
