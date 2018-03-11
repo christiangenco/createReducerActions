@@ -40,7 +40,7 @@ $ yarn add create-reducer-actions
 ## Usage
 
 ```jsx
-// ./redux/counter.js
+// redux/counter.js
 import createReducerActions from "create-reducer-actions";
 
 const initialState = 0;
@@ -54,7 +54,7 @@ export const { reducer, actions } = createReducerActions(
   initialState
 );
 
-// ./store.js
+// store.js
 import { createStore, combineReducers } from "redux";
 
 import { reducer as counter } from "./redux/counter";
@@ -65,7 +65,7 @@ const store = createStore(rootReducer);
 export default store;
 
 
-// ./Counter.js
+// Counter.js
 import React from "react";
 import { connect } from "react-redux";
 import { actions } from "./redux/counter";
