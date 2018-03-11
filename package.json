@@ -1,7 +1,7 @@
 {
   "name": "create-reducer-actions",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.0.1",
+  "main": "src/createReducerActions.js",
   "license": "MIT",
   "scripts": {
     "test": "jest",

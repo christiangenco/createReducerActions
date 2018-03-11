@@ -1,4 +1,4 @@
-# createReducerActions
+# `createReducerActions`
 
 [![Build Status](https://travis-ci.org/christiangenco/createReducerActions.svg?branch=master)](https://travis-ci.org/christiangenco/createReducerActions)
 
