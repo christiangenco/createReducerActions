@@ -1,6 +1,17 @@
 {
   "name": "create-reducer-actions",
-  "version": "1.0.1",
+  "description": "Create your next immutable state by mutating the current one",
+  "version": "1.0.2",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christiangenco/createReducerActions.git"
+  },
+  "keywords": ["redux", "react"],
+  "author": "Christian Genco",
+  "bugs": {
+    "url": "https://github.com/christiangenco/createReducerActions/issues"
+  },
+  "homepage": "https://github.com/christiangenco/createReducerActions",
   "main": "src/createReducerActions.js",
   "license": "MIT",
   "scripts": {
