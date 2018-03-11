@@ -5,9 +5,11 @@
 ## Usage
 
 ```jsx
-// ducks/counter.js
+// ./redux/counter.js
+import createReducerActions from "create-reducer-actions";
+
 const initialState = 0;
-const { reducer, actions } = createReducerActions(
+export const { reducer, actions } = createReducerActions(
   {
     increment: state => state + 1,
     decrement: state => state - 1,
@@ -17,18 +19,44 @@ const { reducer, actions } = createReducerActions(
   initialState
 );
 
-export default reducer;
+// ./store.js
+import { createStore, combineReducers } from "redux";
 
-// store.js
-import { combineReducers, createStore } from "redux";
-import counter from "./ducks/counter";
+import { reducer as counter } from "./redux/counter";
 const rootReducer = combineReducers({ counter });
-// create and export store
+const store = createStore(rootReducer);
 
-// Counter.js
+export default store;
+
+
+// ./Counter.js
 import React from "react";
-import * as counterActions from "./ducks/counter";
-// create Counter with mapDispatchToProps of some counterActions
+import { connect } from "react-redux";
+import { actions } from "./redux/counter";
+
+export const Counter = ({ counter, add, sub, increment, decrement }) => {
+  return (
+    <div>
+      <h1>Counter: {counter}</h1>
+      <button onClick={increment}>increment</button>
+      <button onClick={decrement}>decrement</button>
+      <button onClick={() => add(5)}>add 5</button>
+      <button onClick={() => sub(5)}>subtract 5</button>
+    </div>
+  );
+};
+
+const mapStateToProps = state => {
+  return { counter: state.counter };
+};
+const mapDispatchToProps = {
+  add: actions.add,
+  sub: actions.sub,
+  increment: actions.increment,
+  decrement: actions.decrement
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 ```
 
 ## Prior Art
