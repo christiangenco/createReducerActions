@@ -150,6 +150,28 @@ describe("options", () => {
     expect(reducer(0, actions.like())).toEqual(1);
     expect(actions.like().type).toEqual("APP/LIKE_REDUCER/like");
   });
+
+  test("mutable: true option allows state mutation", () => {
+    const initialState = {
+      photos: { large: { url: "" } }
+    };
+    const { reducer, actions } = createReducerActions(
+      {
+        setLargePhotoUrl: (state, { payload: { url } }) => {
+          state.photos.large.url = url;
+        }
+      },
+      initialState,
+      {
+        mutable: true
+      }
+    );
+
+    const url = "http://lol.com/cats.png";
+    const newState = reducer(initialState, actions.setLargePhotoUrl({ url }));
+    expect(newState.photos.large.url).toBe(url);
+    expect(initialState.photos.large.url).toBe("");
+  });
 });
 
 /*

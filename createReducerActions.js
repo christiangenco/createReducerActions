@@ -1,9 +1,12 @@
+const produce = require("immer").default;
+
 function createReducerActions(
   functions = {},
   initialState = null,
   options = {}
 ) {
   const actionPrefix = options.actionPrefix || "";
+  const mutable = !!options.mutable;
 
   const actions = {};
 
@@ -21,7 +24,13 @@ function createReducerActions(
 
     if (type) type = type.replace(actionPrefix, "");
 
-    if (functions.hasOwnProperty(type)) return functions[type](state, action);
+    if (functions.hasOwnProperty(type)) {
+      if (mutable) {
+        return produce(state, draft => functions[type](draft, action));
+      } else {
+        return functions[type](state, action);
+      }
+    }
 
     return state;
   };
