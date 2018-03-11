@@ -1,19 +1,27 @@
-function createReducer(functions = {}, initialState = null) {
+function createReducerActions(
+  functions = {},
+  initialState = null,
+  options = {}
+) {
+  const actionPrefix = options.actionPrefix || "";
+
   const actions = {};
 
   Object.keys(functions).forEach(name => {
     actions[name] = payload => {
       return {
-        type: name,
+        type: actionPrefix + name,
         payload
       };
     };
   });
 
   const reducer = (state = initialState, action = {}) => {
-    const { type, payload } = action;
+    let { type } = action;
 
-    if ((fn = functions[type])) return fn(state, payload);
+    if (type) type = type.replace(actionPrefix, "");
+
+    if (functions.hasOwnProperty(type)) return functions[type](state, action);
 
     return state;
   };
@@ -21,4 +29,4 @@ function createReducer(functions = {}, initialState = null) {
   return { reducer, actions };
 }
 
-module.exports = createReducer;
+module.exports = createReducerActions;

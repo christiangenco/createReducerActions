@@ -7,6 +7,7 @@
     "test": "jest --watch"
   },
   "dependencies": {
+    "immer": "^1.1.3",
     "redux": "^3.7.2"
   },
   "devDependencies": {

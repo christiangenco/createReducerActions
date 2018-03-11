@@ -1,5 +1,7 @@
 const createReducerActions = require("./createReducerActions");
 
+const { combineReducers } = require("redux");
+
 test("createReducerActions exports a function", () => {
   expect(typeof createReducerActions).toBe("function");
 });
@@ -16,8 +18,8 @@ describe("createReducerActions counter", () => {
     {
       increment: state => state + 1,
       decrement: state => state - 1,
-      add: (state, payload) => state + payload,
-      sub: (state, payload) => state - payload
+      add: (state, { payload }) => state + payload,
+      sub: (state, { payload }) => state - payload
     },
     initialState
   );
@@ -56,8 +58,101 @@ describe("createReducerActions counter", () => {
   });
 });
 
-// const {reducer, actions} = createReducerActions({
-//   add: (state, {payload}) => {state + payload}
-// }, 0);
-//
-// actions.add(1)
+// https://redux.js.org/basics/example-todo-list
+describe("todoApp", () => {
+  let nextTodoId = 0;
+  const todoReducerActions = createReducerActions(
+    {
+      addTodo: (state, { payload: { text } }) => {
+        return [...state, { id: nextTodoId++, text, completed: false }];
+      },
+      toggleTodo: (state, { payload: { index } }) =>
+        state.map(
+          todo =>
+            todo.id === index ? { ...todo, completed: !todo.completed } : todo
+        )
+    },
+    []
+  );
+  const todoReducer = todoReducerActions.reducer;
+  const todoActions = todoReducerActions.actions;
+
+  const visibilityFilterReducerActions = createReducerActions(
+    {
+      setVisibilityFilter: (state, { payload: { filter } }) => filter
+    },
+    "ALL"
+  );
+  const visibilityFilterReducer = visibilityFilterReducerActions.reducer;
+  const visibilityFilterActions = visibilityFilterReducerActions.actions;
+
+  const todoApp = combineReducers({
+    todos: todoReducer,
+    visibilityFilter: visibilityFilterReducer
+  });
+
+  const initialState = { todos: [], visibilityFilter: "ALL" };
+
+  beforeEach(() => {
+    nextTodoId = 0;
+  });
+
+  test("returns default state", () => {
+    expect(todoApp()).toEqual(initialState);
+  });
+
+  test("can add todos", () => {
+    expect(
+      todoApp(initialState, todoActions.addTodo({ text: "goat milk" }))
+    ).toEqual({
+      todos: [{ completed: false, id: 0, text: "goat milk" }],
+      visibilityFilter: "ALL"
+    });
+  });
+
+  test("can toggle todo", () => {
+    const state = todoApp(
+      initialState,
+      todoActions.addTodo({ text: "goat milk" })
+    );
+
+    expect(todoApp(state, todoActions.toggleTodo({ index: 0 }))).toEqual({
+      todos: [{ completed: true, id: 0, text: "goat milk" }],
+      visibilityFilter: "ALL"
+    });
+  });
+
+  test("can set visibility filter", () => {
+    expect(
+      todoApp(
+        initialState,
+        visibilityFilterActions.setVisibilityFilter({ filter: "DONE" })
+      )
+    ).toEqual({
+      todos: [],
+      visibilityFilter: "DONE"
+    });
+  });
+});
+
+describe("options", () => {
+  test("actionPrefix option adds a prefix to action names", () => {
+    const { reducer, actions } = createReducerActions(
+      {
+        like: state => state + 1
+      },
+      0,
+      {
+        actionPrefix: "APP/LIKE_REDUCER/"
+      }
+    );
+
+    expect(reducer(0, actions.like())).toEqual(1);
+    expect(actions.like().type).toEqual("APP/LIKE_REDUCER/like");
+  });
+});
+
+/*
+TODO: options: {mutable: true} // uses immer
+TODO: import/export example in ducks style
+*/
