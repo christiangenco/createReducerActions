@@ -147,4 +147,4 @@ initialState.photos.large.url; // "" The initial state wasn't mutated =O
 
 # Motivation
 
-[Dan Abramov doesn't like one-to-one action creator to reducer modifications](https://twitter.com/dan_abramov/status/738405796770353152) like this because you don't even need redux to do that.
+The standard way of using Redux has too much boiler plate code that makes Redux hard to use.
