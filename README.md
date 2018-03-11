@@ -52,6 +52,7 @@ export const { reducer, actions } = createReducerActions(
   initialState
 );
 
+
 // store.js
 import { createStore, combineReducers } from "redux";
 
@@ -83,12 +84,7 @@ export const Counter = ({ counter, add, sub, increment, decrement }) => {
 const mapStateToProps = state => {
   return { counter: state.counter };
 };
-const mapDispatchToProps = {
-  add: actions.add,
-  sub: actions.sub,
-  increment: actions.increment,
-  decrement: actions.decrement
-};
+const mapDispatchToProps = actions; // automatically includes all exported actions
 
 export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 ```
