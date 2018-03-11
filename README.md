@@ -1,10 +1,12 @@
 # createReducerActions
 
-[![build status](https://img.shields.io/travis/acdlite/redux-actions/master.svg?style=flat-square)](https://travis-ci.org/acdlite/redux-actions)
+[![build status](https://img.shields.io/travis/christiangenco/create-reducer-actions/master.svg?style=flat-square)](https://travis-ci.org/christiangenco/create-reducer-actions)
 
-[![NPM](https://nodei.co/npm/redux-actions.png?downloads=true)](https://nodei.co/npm/redux-actions/)
+[![NPM](https://nodei.co/npm/create-reducer-actions.png?downloads=true)](https://nodei.co/npm/create-reducer-actions/)
 
-[`createReducerActions`]() is a single function that creates a redux reducer and linked action creators, like this:
+[`createReducerActions`]() is a single function that creates a redux reducer and linked action creators.
+
+It works like this:
 
 ```js
 const initialState = 0;
@@ -130,7 +132,7 @@ const { reducer, actions } = createReducerActions(
 const url = "https://i.imgur.com/4LR3f32.jpg";
 const newState = reducer(initialState, actions.setLargePhotoUrl({ url }));
 newState.photos.large.url; // "https://i.imgur.com/4LR3f32.jpg"
-initialState.photos.large.url; // "" The initial state wasn't mutated!
+initialState.photos.large.url; // "" The initial state wasn't mutated =O
 ```
 
 # Similar Projects
