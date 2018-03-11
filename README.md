@@ -1,6 +1,6 @@
 # createReducerActions
 
-[![build status](https://img.shields.io/travis/christiangenco/create-reducer-actions/master.svg?style=flat-square)](https://travis-ci.org/christiangenco/create-reducer-actions)
+[![Build Status](https://travis-ci.org/christiangenco/createReducerActions.svg?branch=master)](https://travis-ci.org/christiangenco/createReducerActions)
 
 [![NPM](https://nodei.co/npm/create-reducer-actions.png?downloads=true)](https://nodei.co/npm/create-reducer-actions/)
 
