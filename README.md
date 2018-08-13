@@ -8,9 +8,9 @@
 
 Benefits:
 
-* You don't need to define action type constants
-* You don't need to write actions or action creators
-* You don't need to write tedious switch/case statements in your reducers
+* You don't need to define action type constants (`const ADD_TODO = 'ADD_TODO'`)
+* You don't need to write actions or action creators (`const addTodo = text => ({ type: ADD_TODO, text })`)
+* You don't need to write tedious `switch/case` statements in your reducers
 * Everything you need to implement a redux feature fits cleanly in one file
 * All actions can be automatically connected to a React component's `props` instead of explicitly connecting them one-by-one in `mapDispatchToProps`
 * `createReducerActions` generates reducers and action creators that work just like ones you would write by hand, so you can easily _try it in existing redux projects_ without refactoring every reducer
@@ -27,7 +27,8 @@ const { reducer, actions } = createReducerActions(
   initialState
 );
 
-actions.up(); // { type: "up" }
+const { up, down } = actions;
+up(); // { type: "up" }
 reducer(); // 0 === initialState
 reducer(7, up()); // 8
 ```
